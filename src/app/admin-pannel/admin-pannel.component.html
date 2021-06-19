@@ -1,0 +1,225 @@
+
+
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+
+  </div>
+
+  <div class="row mb-3">
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4 ">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-uppercase mb-1">Active Users</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{activeUserCount}}</div>
+              <div class="mt-2 mb-0 text-muted text-xs">
+
+                <span class="text-success mr-2"><i class="fa fa-sort-amount-desc"></i> Total Users</span>
+                <span>{{totalUserCounts}}</span>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-users fa-2x text-success"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Earnings (Annual) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-uppercase mb-1">Deactivate Users</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{deactivateUserCount}}</div>
+              <div class="mt-2 mb-0 text-muted text-xs">
+
+                <span class="text-success mr-2"><i class="fa fa-sort-amount-desc"></i> Total Users</span>
+                <span>{{totalUserCounts}}</span>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa fa-user-times fa-2x text-danger"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- New User Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-uppercase mb-1">Connected Devices</div>
+              <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{connectedDeviceCount}}</div>
+              <div class="mt-2 mb-0 text-muted text-xs">
+                <span class="text-success mr-2"><i class="fa fa-sort-amount-desc"></i> Total Users</span>
+                <span>{{totalUserCounts}}</span>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fa fa-wifi fa-2x text-success"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-uppercase mb-1">Disconnected Devices</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{disconnectedDeviceCount}}</div>
+              <div class="mt-2 mb-0 text-muted text-xs">
+                <span class="text-success mr-2"><i class="fa fa-sort-amount-desc"></i> Total Users</span>
+                <span>{{totalUserCounts}}</span>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fa fa-wifi fa-2x text-danger"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <label class="switch" style="margin-left: 15px;">
+      <input type="checkbox" [checked]="true"  [(ngModel)]="togvalue" >
+      <span class="slider round"></span>
+    </label>
+
+    <div style="margin-left: 20px;margin-top: 6px;">
+
+      <span class="label label-danger" *ngIf="togvalue == false">( Server Monitoring Off )</span>
+
+      <span class="label label-success" *ngIf="togvalue">( Server Monitoring ON )</span>
+
+    </div>
+
+    <br>
+
+    <div class="embed-responsive embed-responsive-4by3 "  *ngIf="togvalue == false" style="height: 400px;">
+          <iframe class="embed-responsive-item" src="http://localhost:8597/" ></iframe>
+    </div>
+
+    <div class="embed-responsive embed-responsive-4by3  "  *ngIf="togvalue" style="height: 400px;">
+      <iframe class="embed-responsive-item" src="http://localhost:8597/instances/dcd9567687ec/details" ></iframe>
+    </div>
+
+
+
+    <!-- Modal Logout -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabelLogout"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to logout?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+            <a href="" (click)="Logout()" class="btn btn-primary">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Data Tabel -->
+    <div class="col-xl-12 col-lg-7 mb-4" style="margin-top:40px;margin-left: -11px;">
+      <div class="card">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">User Account Monitoring</h6>
+          <select class="mdb-select md-form btn btn-google dropdown-toggle" [(ngModel)]="togOptionValue" (change)="changeUserDatatableToggel()">
+            <option value="All" >All Item</option>
+            <option value="1" >1 Item Per Page</option>
+            <option value="5">5 Item Per Page</option>
+            <option value="10">10 Item Per Page</option>
+            <option value="50">50 Item Per Page</option>
+            <option value="100">100 Item Per Page</option>
+          </select>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+            <tr>
+              <th>User ID </th>
+              <th>Device ID</th>
+              <th>Name</th>
+              <th>Active Status</th>
+              <th>User Type</th>
+              <th>Sync Status</th>
+              <th>Last Sync Date</th>
+              <th>Last Sync Time</th>
+              <th>Activation</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of userData ; let i=index">
+              <td>{{user.userId}}</td>
+              <td>{{user.deviceId}}</td>
+              <td>{{user.userName}}</td>
+
+
+              <td *ngIf="user.activeStatus==1"><i class="fas fa-broadcast-tower text-success fa-1x">&nbsp;&nbsp;&nbsp;<span class="badge badge-light badge-pill">Activated </span></i></td>
+              <td *ngIf="user.activeStatus==0"><i class="fas fa-broadcast-tower text-danger fa-1x"></i>&nbsp;&nbsp;&nbsp;<span class="badge badge-light badge-pill">Not Activated</span></td>
+
+              <td>{{user.userType}}</td>
+              <td *ngIf="user.userType=='Admin'">--</td>
+              <td *ngIf="user.deviceStatusList[0].syncStatus==1 && user.userType=='User'" ><i class="fas fa-wifi text-success fa-1x">&nbsp;&nbsp;&nbsp;<span class="badge badge-light badge-pill">Connected</span></i></td>
+              <td *ngIf="user.deviceStatusList[0].syncStatus==0 && user.userType=='User'" ><i class="fas fa-wifi text-danger fa-1x">&nbsp;&nbsp;&nbsp;<span class="badge badge-light badge-pill ">Not Connected</span></i></td>
+              <td *ngIf="user.userType=='Admin'">--</td>
+              <td *ngIf="user.userType=='User'">{{user.deviceStatusList[0].lastSyncDate}}</td>
+              <td *ngIf="user.userType=='Admin'">--</td>
+              <td *ngIf="user.userType=='User'">{{user.deviceStatusList[0].lastSyncTime}}</td>
+              <td *ngIf="user.activeStatus ==1">
+                <!-- Default checked -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" [checked]="true" class="custom-control-input " id="{{user.userId}}" name="togg"  [value]="user.userId"  (change)="updateActivation($event,0)" >
+                  <label class="custom-control-label" for="{{user.userId}}"></label>
+                </div>
+
+              </td>
+
+              <td *ngIf="user.activeStatus ==0">
+                <!-- Default checked -->
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" [checked]="false" class="custom-control-input" id="{{user.deviceId}}" name="togg"  [value]="user.userId"  (change)="updateActivation($event,1)" >
+                  <label class="custom-control-label" for="{{user.deviceId}}"></label>
+                </div>
+
+              </td>
+
+
+
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer"></div>
+      </div>
+    </div>
+
+
+<!---Container Fluid-->
+</div>
+</div>

@@ -1,0 +1,253 @@
+<div class="container-fluid" id="container-wrapper">
+
+  <!-- Modal Logout -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabelLogout"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to logout?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+          <a href="" (click)="Logout()" class="btn btn-primary">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="card">
+
+  <h5 class="card-header">Basic Information</h5>
+
+  <div class="card-body">
+
+
+    <ul class="list-group">
+      <li class="list-group-item"><i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp; User Name &nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{userData.userName}}</li>
+      <li class="list-group-item"><i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp; Email &nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{userData.email}}</li>
+      <li class="list-group-item"><i class="far fa-address-book"></i>&nbsp;&nbsp;&nbsp; Contact Number &nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{userData.contactNumber}}</li>
+
+      <li class="list-group-item" *ngIf="userData.activeStatus==1"><i class="fas fa-check-circle text-success"></i>&nbsp;&nbsp;&nbsp; Activate Status &nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Activated</li>
+      <li class="list-group-item" *ngIf="userData.activeStatus==0"><i class="fas fa-times-circle text-danger"></i>&nbsp;&nbsp;&nbsp; Activate Status &nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Deactivated</li>
+      <li class="list-group-item"><i class="fas fa-user-shield"></i>&nbsp;&nbsp;&nbsp;User Type &nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{userData.userType}}</li>
+    </ul>
+
+    <br>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn  btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
+      Update &nbsp;&nbsp; <i class="fas fa-user-edit"></i>
+    </button>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Update User Information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmitUpdateForm()">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" formControlName="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors.required">Email is required !</div>
+                  <div *ngIf="f.email.errors.pattern">Invalid email address ! <br> Ex : (info@rzktechnology.com)</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Contact Number</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Contact Number" formControlName="contactNumber" [ngClass]="{ 'is-invalid': submitted && f.contactNumber.errors }">
+                <div *ngIf="submitted && f.contactNumber.errors" class="invalid-feedback">
+                  <div *ngIf="f.contactNumber.errors.required">Contact Number is required !</div>
+                  <div *ngIf="f.contactNumber.errors.pattern">Invalid Contact Number ! <br> Ex : (+94 XXX XXX XXXX)</div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+
+
+          </div>
+
+
+
+          <div class="modal-footer">
+            <div class="alert-success badge-pill" role="alert" *ngIf="sucess" style="margin-right: 110px;">
+              User Updated Successfully !
+            </div>
+            <div class="alert-danger badge-pill" role="alert" *ngIf="updateError" style="margin-right: 110px;">
+              Please enter user details for Update !
+            </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+  <br>
+
+  <div class="card">
+    <h5 class="card-header">Device Synced Information</h5>
+    <div class="card-body">
+      <ul class="list-group" *ngIf="userData.userType == 'Admin'">
+        <li class="list-group-item"><i class="fas fa-wifi"></i>&nbsp;&nbsp;&nbsp;Synced Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data not applicable</li>
+        <li class="list-group-item"><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Last Synced Data &nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data not applicable</li>
+        <li class="list-group-item"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;Last Synced Time &nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data not applicable</li>
+
+      </ul>
+
+      <ul class="list-group" *ngIf="userData.userType == 'User'">
+        <li class="list-group-item" *ngIf="userData.deviceStatusList[0].syncStatus ==1"><i class="fas fa-wifi text-success"></i>&nbsp;&nbsp;&nbsp;Synced Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Synced </li>
+        <li class="list-group-item" *ngIf="userData.deviceStatusList[0].syncStatus ==0"><i class="fas fa-wifi text-danger"></i>&nbsp;&nbsp;&nbsp;Synced Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not Synced </li>
+        <li class="list-group-item"><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Last Synced Data &nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {{userData.deviceStatusList[0].lastSyncDate}}</li>
+        <li class="list-group-item"><i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;Last Synced Time &nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{userData.deviceStatusList[0].lastSyncTime}}</li>
+
+      </ul>
+
+    </div>
+  </div>
+
+  <br>
+
+  <div class="card">
+    <h5 class="card-header">Device Ports / Sockets Information</h5>
+    <div class="card-body">
+
+
+      <nav class="navbar navbar-light blue lighten-4" *ngIf="userData.userType == 'Admin'">
+        <span class="navbar-brand">Data Not Applicable</span>
+      </nav>
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="userData.userType == 'User'">
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" *ngIf="userData.deviceStatusList[0].socket1_Status ==1">
+              <i class="fas fa-plug fa-4x text-success"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 1 &nbsp;&nbsp; ON</span>
+            </li>
+
+            <li class="nav-item active" *ngIf="userData.deviceStatusList[0].socket1_Status ==0">
+              <i class="fas fa-plug fa-4x text-danger"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 1 &nbsp;&nbsp; OFF</span>
+            </li>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <li class="nav-item active" *ngIf="userData.deviceStatusList[0].socket2_Status ==0">
+              <i class="fas fa-plug fa-4x text-danger"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 1 &nbsp;&nbsp; OFF</span>
+            </li>
+
+            <li class="nav-item" *ngIf="userData.deviceStatusList[0].socket2_Status ==1">
+              <i class="fas fa-plug fa-4x text-success"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 2 &nbsp;&nbsp; ON</span>
+            </li>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <li class="nav-item active" *ngIf="userData.deviceStatusList[0].socket3_Status ==0">
+              <i class="fas fa-plug fa-4x text-danger"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 1 &nbsp;&nbsp; OFF</span>
+            </li>
+
+            <li class="nav-item"  *ngIf="userData.deviceStatusList[0].socket3_Status ==1">
+              <i class="fas fa-plug fa-4x text-success"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 3 &nbsp;&nbsp; ON</span>
+            </li>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <li class="nav-item active" *ngIf="userData.deviceStatusList[0].socket4_Status ==0">
+              <i class="fas fa-plug fa-4x text-danger"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 1 &nbsp;&nbsp; OFF</span>
+            </li>
+
+            <li class="nav-item" *ngIf="userData.deviceStatusList[0].socket4_Status ==1">
+              <i class="fas fa-plug fa-4x text-success"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 4 &nbsp;&nbsp; ON</span>
+            </li>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <li class="nav-item active" *ngIf="userData.deviceStatusList[0].motionSensor_Status ==0">
+              <i class="fas fa-plug fa-4x text-danger"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Socket 1 &nbsp;&nbsp; OFF</span>
+            </li>
+
+            <li class="nav-item" *ngIf="userData.deviceStatusList[0].motionSensor_Status ==1">
+              <i class="fas fa-radiation-alt fa-4x text-success"></i>
+              <br>
+              <br>
+              <span class="badge badge-pill badge-info">Sensor &nbsp;&nbsp; ON</span>
+            </li>
+
+
+          </ul>
+
+        </div>
+      </nav>
+
+
+
+
+
+
+
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+</div>

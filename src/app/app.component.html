@@ -1,0 +1,29 @@
+<app-login *ngIf="isLogin()"></app-login>
+
+
+<div id="wrapper">
+
+
+  <app-nav-bar *ngIf="! isLogin() && ! isForgetpassowrd()"></app-nav-bar>
+
+
+  <div class="d-flex flex-column" id="content-wrapper">
+
+    <div id="content">
+
+
+      <app-bottom-navigation *ngIf="! isLogin() && ! isForgetpassowrd()"></app-bottom-navigation>
+      <app-admin-pannel *ngIf="isAdminPannel()"></app-admin-pannel>
+      <app-add-user *ngIf="isAdduser()"></app-add-user>
+      <app-manage-user-profile *ngIf="isManageUserProfile()"></app-manage-user-profile>
+      <app-user-data-view *ngIf="isUserDataView()"></app-user-data-view>
+      <app-forget-password *ngIf="isForgetpassowrd()"></app-forget-password>
+      <app-footer *ngIf="! isLogin() && ! isManageUserProfile() && ! isUserDataView() && ! isForgetpassowrd()"></app-footer>
+
+    </div>
+  </div>
+
+</div>
+
+
+
